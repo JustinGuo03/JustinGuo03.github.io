@@ -19,7 +19,6 @@ import { WordleSolverComponent } from './wordle-solver/wordle-solver.component';
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
-		HttpClientModule,
 		ReactiveFormsModule,
 
 		//components
