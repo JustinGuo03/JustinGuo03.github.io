@@ -5,10 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{
-		path: '',
+		path: 'home',
 		loadComponent: () =>
-			import('./app.component').then(
-				mod => mod.AppComponent
+			import('./home/home.component').then(
+				mod => mod.HomeComponent
 			),
 	},
     {

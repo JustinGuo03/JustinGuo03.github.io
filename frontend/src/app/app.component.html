@@ -1,74 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio - My App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f0f0f0;
-            padding: 20px;
-            margin: 0;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .project {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-        }
-        .project h3 {
-            margin-top: 0;
-        }
-        .project p {
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>My Portfolio - My App</h1>
-    </header>
-    
-    <div class="container">
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="project">
-                <h3>Wordle Solver</h3>
-                <p>Given a mystery 5-letter word, the program tries to guess this secret word from being told what letters in each guess are present or are in the correct spot</p>
-                <p>Skills/Technologies used: Python</p>
-                <p><a routerLink="/wordle" routerLinkActive="active" ariaCurrentWhenActive="page">View Project</a></p>
-            </div>
-            <div class="project">
-                <h3>Project 2</h3>
-                <p>Description of Project 2</p>
-                <p>Skills/Technologies used: React, Node.js, MongoDB, etc.</p>
-                <p><a href="#">View Project</a></p>
-            </div>
-            <!-- Add more projects as needed -->
-        </section>
-        
-        <section id="resume">
-            <h2>Resume</h2>
-            <p>Your resume content goes here. You can include your skills, education, work experience, etc.</p>
-            <p>You can also provide a downloadable link to your full resume if available.</p>
-            <p><a href="#">Download Resume</a></p>
-        </section>
-    </div>
-</body>
-</html>
+<div class="page-border" data-wow-duration="0.7s" data-wow-delay="0.2s">
+	<div
+		class="top-border wow fadeInDown animated"
+		style="visibility: visible; animation-name: fadeInDown"></div>
+	<div
+		class="right-border wow fadeInRight animated"
+		style="visibility: visible; animation-name: fadeInRight"></div>
+	<div
+		class="bottom-border wow fadeInUp animated"
+		style="visibility: visible; animation-name: fadeInUp"></div>
+	<div
+		class="left-border wow fadeInLeft animated"
+		style="visibility: visible; animation-name: fadeInLeft"></div>
+</div>
+<!--Main Content Area-->
+<main id="content">
+	<router-outlet></router-outlet>
+</main>
+<!--End Main Content Area-->
