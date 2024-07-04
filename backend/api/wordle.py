@@ -46,7 +46,7 @@ def get_word(
 def create_word(
     word: Word,
     wordle_service: WordleService = Depends(),
-) -> list[Word]:
+) -> Word:
 
     return wordle_service.create_word(word)
 
@@ -58,3 +58,10 @@ def delete_word(
 ) -> None:
 
     wordle_service.delete(word)
+
+@api.post("", response_model=Word, tags=["Wordle"])
+def create_default_table(
+    wordle_service: WordleService = Depends(),
+) -> list[Word]:
+
+    return wordle_service.create_default_table()

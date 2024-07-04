@@ -8,8 +8,8 @@ import { Word } from './wordle.model';
   providedIn: 'root'
 })
 export class WordleService {
-  private words: ReplaySubject<Word[]> = new ReplaySubject(1);
-  articles$: Observable<Word[]> = this.words.asObservable();
+//   private words: ReplaySubject<Word[]> = new ReplaySubject(1);
+//   guess$: Observable<Word[]> = this.words.asObservable();
 
 //   private wordLetters: ReplaySubject<Word[]> =
 //     new ReplaySubject(1);
@@ -18,26 +18,26 @@ export class WordleService {
 
   // TODO: implement other methods and constructor
   constructor(
-    protected http: HttpClient,
+    protected http: HttpClient
   ) {
   }
 
   /** Returns all articles entries from the backend database table using the backend HTTP get request.
-   * @returns {Observable<Article[]>}
-   */
-  getWords() {
-    this.http
-      .get<Word[]>('/api/wordle')
-      .subscribe((word) => this.words.next(word));
-  }
+//    * @returns {Observable<Word[]>}
+//    */
+//   getWords() {
+//     this.http
+//       .get<Word[]>('/api/wordle')
+//       .subscribe((word) => this.words.next(word));
+//   }
 
 
   /** Returns the article object from the backend database table using the backend HTTP get request.
    * @param slug: String representing the article slug
-   * @returns {Observable<Aricle>}
+   * @returns {Observable<Word>}
    */
-  getWord(slug: string): Observable<Word> {
-    return this.http.get<Word>('/api/wordle/' + slug);
+  getWord(): Observable<Word> {
+    return this.http.get<Word>('/api/wordle/');
   }
 
   /** Returns the new article object from the backend database table using the backend HTTP post request.
@@ -48,7 +48,11 @@ export class WordleService {
     return this.http.post<Word>('/api/wordle', request);
   }
 
-  deleteArticle(slug: string) {
+  deleteWord(slug: Word) {
     return this.http.delete('/api/wordle/' + slug);
+  }
+
+  createDefaultTable(request: Word) {
+    return this.http.post<Word[]>('/api/wordle/', request);
   }
 }
