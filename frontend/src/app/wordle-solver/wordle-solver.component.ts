@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChildren, QueryList, ElementRef, Output, EventEm
 import { ActivatedRoute, Router } from '@angular/router';
 import { Word } from './wordle.model';
 import { WordleService } from './wordle.service';
-import id from '@angular/common/locales/id';
 import { Observable } from 'rxjs';
 
 

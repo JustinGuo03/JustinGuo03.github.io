@@ -25,7 +25,6 @@ import { WordleSolverComponent } from './wordle-solver/wordle-solver.component';
 		WordleSolverComponent,
 		HomeComponent
 	],
-	providers: [provideHttpClient()],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
