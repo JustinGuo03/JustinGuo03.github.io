@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // Components
@@ -15,15 +15,16 @@ import { WordleSolverComponent } from './wordle-solver/wordle-solver.component';
 
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [
+		AppComponent,
+		WordleSolverComponent
+	],
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
 		ReactiveFormsModule,
-
-		//components
-		WordleSolverComponent
 	],
 	bootstrap: [AppComponent],
+	providers: [provideHttpClient()]
 })
 export class AppModule {}
