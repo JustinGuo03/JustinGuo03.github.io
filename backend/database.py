@@ -2,7 +2,7 @@
 
 import sqlalchemy
 from sqlalchemy.orm import Session
-from .env import getenv # type: ignore
+from .env import getenv
 
 
 def _engine_str(database: str = getenv("POSTGRES_DATABASE")) -> str:
