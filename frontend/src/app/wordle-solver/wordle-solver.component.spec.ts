@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WordleSolverComponent } from './wordle-solver.component';
+import { beforeEach, describe, it } from 'node:test';
+
+import '@types/jest';
 
 describe('WordleSolverComponent', () => {
   let component: WordleSolverComponent;
@@ -21,3 +24,4 @@ describe('WordleSolverComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

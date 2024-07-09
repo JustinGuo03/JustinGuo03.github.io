@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letter Boxes</title>
-</head>
-<body>
-    <div id="boxContainer"></div>
-    <button id="submitButton">Submit</button>
-</body>
-</html>
+<div id="boxContainer">
+    <div class="letter-box" *ngFor="let letter of [guess.letter1, guess.letter2, guess.letter3, guess.letter4, guess.letter5]; let i = index"
+         (click)="changeColor(i)"
+         [style.background-color]="getColor(i)">
+      {{ letter }}
+    </div>
+  </div>
+  <button id="submitButton">Submit</button>
