@@ -177,9 +177,6 @@ export class WordleSolverComponent implements OnInit{
     if (this.solved[4]) {
       this.filteredWords = this.filteredWords.filter((word) => word.letter1 == letter || word.letter2 == letter || word.letter3 == letter || word.letter4 == letter);
     } 
-
-    console.log("Removed yellow box");
-    console.log(this.filteredWords.length);
   }
     
     
@@ -205,8 +202,6 @@ export class WordleSolverComponent implements OnInit{
     }
       
     this.filteredWords = this.filteredWords.filter((word) => this.solved[word.word.indexOf(letter)] || word.word.indexOf(letter) < 0);
-    console.log("Removed white box");
-    console.log(this.filteredWords.length);
   }
 
   greenBox(index: number): void {
@@ -227,16 +222,12 @@ export class WordleSolverComponent implements OnInit{
         this.filteredWords = this.filteredWords.filter((word) => word.letter5 == this.guess.letter5);
         break;
     }
-
-    console.log("Removed green box");
-    console.log(this.filteredWords.length);
-    console.log(this.filteredWords);
   }
 
   updateGuess(): void {
     for (let i=0; i<this.colorIndices.length; i++) {
       if (this.colorIndices[i] == 2) {
-        this.solved[i] == true;
+        this.solved[i] = true;
       }
     }
 
