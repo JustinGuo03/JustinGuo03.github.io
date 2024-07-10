@@ -2,13 +2,13 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, QueryList, ViewChi
 import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { Word, Counter, DataFrame } from './wordle.model';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-wordle-solver',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './wordle-solver.component.html',
   styleUrl: './wordle-solver.component.css'
 })
@@ -59,12 +59,16 @@ export class WordleSolverComponent implements OnInit{
 
   colors = ['white', 'yellow', 'green'];
   colorIndices = [0, 0, 0, 0, 0];
+  solved = [false, false, false, false, false];
+  wordleSolved = false;
+  
 
   constructor(
     public route: Router
   ){}
 
   ngOnInit(): void {
+    this.resetState();
     for (let i = 0; i < 5; i++) {
       const counter = new Counter<string>();
       this.dfWords.forEach((word:DataFrame) => {
@@ -127,5 +131,170 @@ export class WordleSolverComponent implements OnInit{
 
   getColor(index: number): string {
     return this.colors[this.colorIndices[index]];
+  }
+
+  yellowBox(index: number): void {
+    let letter = "";
+    switch (index) {
+      case 0:
+        letter = this.guess.letter1;
+        this.filteredWords = this.filteredWords.filter((word) => word.letter1 != letter);
+        break;
+
+      case 1:
+        letter = this.guess.letter2;
+        this.filteredWords = this.filteredWords.filter((word) => word.letter2 != letter);
+        break;
+
+      case 2:
+        letter = this.guess.letter3;
+        this.filteredWords = this.filteredWords.filter((word) => word.letter3 != letter);
+        break;
+
+      case 3:
+        letter = this.guess.letter4;
+        this.filteredWords = this.filteredWords.filter((word) => word.letter4 != letter);
+        break;
+
+      case 4:
+        letter = this.guess.letter5;
+        this.filteredWords = this.filteredWords.filter((word) => word.letter5 != letter);
+        break;
+    }
+      
+    if (this.solved[0]) {
+      this.filteredWords = this.filteredWords.filter((word) => word.letter5 == letter || word.letter2 == letter || word.letter3 == letter || word.letter4 == letter);
+    } 
+    if (this.solved[1]) {
+      this.filteredWords = this.filteredWords.filter((word) => word.letter1 == letter || word.letter5 == letter || word.letter3 == letter || word.letter4 == letter);
+    } 
+    if (this.solved[2]) {
+      this.filteredWords = this.filteredWords.filter((word) => word.letter1 == letter || word.letter2 == letter || word.letter5 == letter || word.letter4 == letter);
+    } 
+    if (this.solved[3]) {
+      this.filteredWords = this.filteredWords.filter((word) => word.letter1 == letter || word.letter2 == letter || word.letter3 == letter || word.letter5 == letter);
+    }
+    if (this.solved[4]) {
+      this.filteredWords = this.filteredWords.filter((word) => word.letter1 == letter || word.letter2 == letter || word.letter3 == letter || word.letter4 == letter);
+    } 
+
+    console.log("Removed yellow box");
+    console.log(this.filteredWords.length);
+  }
+    
+    
+
+  whiteBox(index: number): void {
+    let letter = "";
+    switch (index) {
+      case 0:
+        letter = this.guess.letter1;
+        break;
+      case 1:
+        letter = this.guess.letter2;
+        break;
+      case 2:
+        letter = this.guess.letter3;
+        break;
+      case 3:
+        letter = this.guess.letter4;
+        break;
+      case 4:
+        letter = this.guess.letter5;
+        break;
+    }
+      
+    this.filteredWords = this.filteredWords.filter((word) => this.solved[word.word.indexOf(letter)] || word.word.indexOf(letter) < 0);
+    console.log("Removed white box");
+    console.log(this.filteredWords.length);
+  }
+
+  greenBox(index: number): void {
+    switch (index) {
+      case 0:
+        this.filteredWords = this.filteredWords.filter((word) => word.letter1 == this.guess.letter1);
+        break;
+      case 1:
+        this.filteredWords = this.filteredWords.filter((word) => word.letter2 == this.guess.letter2);
+        break;
+      case 2:
+        this.filteredWords = this.filteredWords.filter((word) => word.letter3 == this.guess.letter3);
+        break;
+      case 3:
+        this.filteredWords = this.filteredWords.filter((word) => word.letter4 == this.guess.letter4);
+        break;
+      case 4:
+        this.filteredWords = this.filteredWords.filter((word) => word.letter5 == this.guess.letter5);
+        break;
+    }
+
+    console.log("Removed green box");
+    console.log(this.filteredWords.length);
+    console.log(this.filteredWords);
+  }
+
+  updateGuess(): void {
+    for (let i=0; i<this.colorIndices.length; i++) {
+      if (this.colorIndices[i] == 2) {
+        this.solved[i] == true;
+      }
+    }
+
+    for (let wordIndex = 0; wordIndex<this.colorIndices.length; wordIndex++) {
+      if (this.colorIndices[wordIndex] == 0 && this.filteredWords.length > 0) {
+        this.whiteBox(wordIndex);
+      } else if (this.colorIndices[wordIndex] == 1 && this.filteredWords.length > 0) {
+        this.yellowBox(wordIndex);
+      } else if (this.filteredWords.length > 0) {
+        this.greenBox(wordIndex);
+      }
+    }
+  }
+
+  submitColors(): void {
+    this.wordleSolved = this.colorIndices.every(index => index === 2);
+    if (this.wordleSolved) {
+      this.showPopup('congratsPopup');
+    } else {
+      this.updateGuess()
+
+      if (this.filteredWords.length > 0) {
+        this.guess = this.makeGuess()
+      } else {
+        this.showPopup('noGuessesPopup');
+      }
+      this.resetColors();
+    }
+  }
+
+  resetState() {
+    this.wordleSolved = false;
+    this.filteredWords = this.allWords;
+    this.resetColors();
+    this.guess = this.makeGuess();
+    this.closePopup('noGuessesPopup');
+    this.closePopup('congratsPopup');
+  }
+
+  resetColors() {
+    this.colorIndices = [0, 0, 0, 0, 0];
+  }
+    
+  preventDefault(event: Event) {
+    event.preventDefault();
+  }
+
+  showPopup(popupId: string) {
+    const popup = document.getElementById(popupId);
+    if (popup) {
+      popup.style.display = 'block';
+    }
+  }
+
+  closePopup(popupId: string) {
+    const popup = document.getElementById(popupId);
+    if (popup) {
+      popup.style.display = 'none';
+    }
   }
 }

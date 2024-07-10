@@ -1,8 +1,45 @@
-<div id="boxContainer">
-    <div class="letter-box" *ngFor="let letter of [guess.letter1, guess.letter2, guess.letter3, guess.letter4, guess.letter5]; let i = index"
-         (click)="changeColor(i)"
-         [style.background-color]="getColor(i)">
-      {{ letter }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Wordle Game</title>
+</head>
+<body>
+    <header>
+        <h1><a href="#" style="color: #fff; text-decoration: none;">Portfolio - Wordle Game</a></h1>
+    </header>
+    
+    <div class="container">
+        <h2>Wordle Game</h2>
+        
+        <div id="boxContainer">
+            <div class="letter-box no-select" *ngFor="let letter of [guess.letter1, guess.letter2, guess.letter3, guess.letter4, guess.letter5]; let i = index"
+                 (click)="changeColor(i)"
+                 (mousedown)="preventDefault($event)"
+                 [style.background-color]="getColor(i)">
+                {{ letter }}
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="resetButton" (click)="resetState()">Reset</button>
+            <button id="submitButton" (click)="submitColors()">Submit</button>
+        </div>
+
+        <div id="noGuessesPopup" class="popup">
+          <div class="popup-content">
+              Sorry, wordle could not be solved. Please reset the game.
+          </div>
+          <button class="close-popup" (click)="closePopup('noGuessesPopup')">Close</button>
+        </div>
+
+        <div id="congratsPopup" class="popup">
+          <div class="popup-content">
+              Congratulations! We solved the wordle correctly!
+          </div>
+          <button class="close-popup" (click)="closePopup('congratsPopup')">Close</button>
+        </div>
     </div>
-  </div>
-  <button id="submitButton">Submit</button>
+</body>
+</html>
